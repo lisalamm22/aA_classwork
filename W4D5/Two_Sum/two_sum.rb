@@ -59,5 +59,24 @@ def two_sum?(arr,target_sum)    #O(n)
 end
 
 # arr = [0, 1, 5, 7]
-p two_sum?(arr, 6) # => should be true
-p two_sum?(arr, 10) # => should be false
+# p two_sum?(arr, 6) # => should be true
+# p two_sum?(arr, 10) # => should be false
+
+def two_sum_pairs(arr,target_sum) 
+    pairs = []
+    hash = Hash.new {|h,k| h[k]=[]} 
+
+    arr.each_with_index do |el,idx|
+        if !hash[target_sum-el].empty?
+            first_idx = hash[target_sum-el].shift
+            pairs << [first_idx,idx]
+        else
+            hash[el] << idx
+        end
+    end
+    pairs
+end
+
+# arr = [0, 1, 5, 7]
+# p two_sum_pairs(arr, 6) # => should be true
+# p two_sum_pairs(arr, 10) # => should be false
