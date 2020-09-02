@@ -22,16 +22,16 @@
 
 require_relative './sqlzoo.rb'
 
-def example_query
-  execute(<<-SQL)
-    SELECT
-      *
-    FROM
-      movies
-    WHERE
-      title = 'Doctor No'
-  SQL
-end
+# def example_query
+#   execute(<<-SQL)
+#     SELECT
+#       *
+#     FROM
+#       movies
+#     WHERE
+#       title = 'Doctor No'
+#   SQL
+# end
 
 def films_from_sixty_two
   # List the films where the yr is 1962 [Show id, title]
@@ -81,7 +81,7 @@ def films_by_id
     FROM
       movies
     WHERE
-      movies.id = 1119 OR movies.id = 1595 OR movies.id = 1768
+      movies.id IN (1119,1595,1768)
   SQL
 end
 
@@ -119,24 +119,24 @@ def casablanca_cast
     FROM
       actors
     JOIN
-      castings AS actors_casting ON actors_casting.actor_id = actors.id
+      castings ON castings.actor_id = actors.id
     WHERE
-      actors_casting.movie_id = 27
+      castings.movie_id = 27
   SQL
 end
 
 def alien_cast
   # Obtain the cast list for the film 'Alien'
   execute(<<-SQL)
-  SELECT
-    actors.name
-  FROM
-    actors
-  JOIN
-    castings AS actors_castings ON actors_castings.actor_id = actors.id
-  JOIN
-    movies AS actors_movies ON actors_movies.id = movie_id
-  WHERE
-    actors_movies.title = 'Alien'
+    SELECT
+      actors.name
+    FROM
+      actors
+    JOIN
+      castings ON castings.actor_id = actors.id
+    JOIN
+      movies ON movies.id = castings.movie_id
+    WHERE
+      movies.title = 'Alien'
   SQL
 end

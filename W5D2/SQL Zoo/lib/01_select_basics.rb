@@ -10,25 +10,20 @@
 
 require_relative './sqlzoo.rb'
 
-def example_select
-  execute(<<-SQL)
-    SELECT
-      population
-    FROM
-      countries
-    WHERE
-      name = 'France'
-  SQL
-end
+# def example_select
+#   execute(<<-SQL)
+
+#   SQL
+# end
 
 def select_population_of_germany
   execute(<<-SQL)
     SELECT
-      population
+      countries.population
     FROM
       countries
     WHERE
-      name = 'Germany'
+      countries.name = 'Germany'
   SQL
 end
 
@@ -37,7 +32,7 @@ def per_capita_gdp
   # the area is over 5,000,000 km^2
   execute(<<-SQL)
     SELECT
-      countries.name, (countries.gdp/countries.population)
+      countries.name, countries.gdp/countries.population
     FROM
       countries
     WHERE
@@ -50,8 +45,7 @@ def small_and_wealthy
   # and the gdp is more than 5,000,000,000.
   execute(<<-SQL)
     SELECT
-      countries.name AS country_name,
-      countries.continent AS cont
+      countries.name, countries.continent
     FROM
       countries
     WHERE
@@ -64,15 +58,15 @@ def scandinavia
   # 'Sweden'
   execute(<<-SQL)
     SELECT
-      countries.name AS country_name,
-      countries.population AS pop
+      countries.name, countries.population
     FROM
       countries
-    WHERE 
+    WHERE
       countries.name = 'Denmark' OR
       countries.name = 'Finland' OR
       countries.name = 'Norway' OR
       countries.name = 'Sweden'
+
   SQL
 end
 
@@ -80,7 +74,7 @@ def starts_with_g
   # Show each country that begins with the letter G
   execute(<<-SQL)
     SELECT
-      countries.name 
+      countries.name
     FROM
       countries
     WHERE
@@ -94,8 +88,7 @@ def just_the_right_size
   # BETWEEN allows range checking - note that it is inclusive.
   execute(<<-SQL)
     SELECT
-      countries.name AS country_name,
-      (countries.area/1000) AS area
+      countries.name, countries.area/1000
     FROM
       countries
     WHERE

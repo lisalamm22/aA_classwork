@@ -1,0 +1,404 @@
+Lisa - PartnerB:
+
+## Question One
+What are the disadvantages of adding an index to a table column in a database?
+
+Answer: Indices do have a cost. They make writes (`INSERT`s, `DELETE`s, and
+`UPDATE`s) a little more taxing because the index table must also be updated.
+
+## Question Two
+
+Given the following table write all the `belongs_to` and `has_many` associations
+for models based on the below table (`User`, `Enrollment`, and `Course`)
+
+```ruby
+
+# == Schema Information
+#
+# Table name: users
+#
+#  id   :integer                not null, primary key
+#  name :string                 not null
+
+
+# Table name: enrollments
+#
+#  id   :integer                not null, primary key
+#  course_id :integer           not null
+#  student_id :integer          not null
+
+
+# Table name: courses
+#
+#  id   :integer                not null, primary key
+#  course_name :string          not null
+#  professor_id :integer        not null
+#  prereq_course_id :integer    not null
+
+Users 
+has_many :enrollments,
+primary_key: :id,
+foreign_key: :student_id,
+class_name: 'Enrollment'
+
+has_many :courses,
+primary_key: :id,
+foreign_key: :professor_id,
+class_name: 'Course'
+
+Enrollments
+belongs_to :course,
+primary_key: :id,
+foreign_key: :course_id,
+class_name: 'Course'
+
+belongs_to :student,
+primary_key: :id,
+foreign_key: :student_id,
+class_name: 'User'
+
+Course
+has_many :enrollments,
+primary_key: :id,
+foreign_key: :course_id,
+class_name: 'Enrollment'
+
+belongs_to :professor,
+primary_key: :id,
+foreign_key: :professor_id,
+class_name: 'User'
+
+belongs_to :prereq_course,
+primary_key: :id,
+foreign_key: :prereq_course_id,
+class_name: 'Course'
+
+Michelle - PartnerA
+
+## Question One: Employees Query
+
+You are given a PostgreSQL database with two tables: the first is an `employees`
+table and the second is a `departments` table. Employees can belong to a single
+department.
+
+1.  Write a SQL query that, given a department name, finds all the employees
+    `name`s that are in that department.
+
+2.  Next find the name of the employees that don't belong to any department
+
+list employee names from a specific department
+
+SELECT
+    employees.name
+FROM
+    employees
+JOIN
+    departments ON employees.department_id = departments.id
+WHERE
+    departments.name = 'department'
+
+SELECT
+    employees.name
+FROM
+    employees
+WHERE
+    department_id IS NULL
+
+## Question Two:
+
+Describe the differences between a primary key and a foreign key.
+
+**Answer**: A primary key uniquely identifies a record in the relational
+database table, whereas a foreign key refers to the `id` column which is the
+primary key of **another** table.
+
+## Question Three:
+
+Given the following table write all the `belongs_to` and `has_many` **and**
+`has_many through` associations for models based on the below table
+(`Physician`, `Appointment`, and `Patient`)
+
+:general_patients
+:primary_patient_appointments
+
+```ruby
+# == Schema Information
+#
+# Table name: physicians
+#
+#  id   :integer          not null, primary key
+#  name :string           not null
+
+
+# Table name: appointments
+#
+#  id   :integer           not null, primary key
+#  physician_id :integer   not null
+#  patient_id :integer     not null
+
+
+# Table name: patients
+#
+#  id   :integer           not null, primary key
+#  name :string            not null
+#  primary_physician_id :integer
+
+```
+PHYSICIANS
+
+has_many :appointments,
+    primary_key: :id,
+    foreign_key: :physician_id,
+    class_name: :Appointment
+
+has_many :patients,
+    primary_key: :id,
+    foreign_key: :primary_physician_id,
+    class_name: :Patient
+
+has_many :general_patients,
+    through: :appointments,
+    source: :patient
+
+has_many :primary_patient_appointments,
+    through: :patients,
+    source: :appointments
+
+APPOINTMENTS
+
+belongs_to :physician,
+    primary_key: :id,
+    foreign_key: :physician_id,
+    class_name: :Physician
+
+belongs_to :patient,
+    primary_key: :id,
+    foreign_key: :patient_id,
+    class_name: :Patient
+
+PATIENT
+
+has_many :appointments,
+    primary_key: :id,
+    foreign_key: :patient_id,
+    class_name: :Appointment
+
+belongs_to :physician,
+    primary_key: :id,
+    foreign_key: :primary_physician_id,
+    class_name: :Physician
+
+## Question Four:
+
+Paraphrase the advantages of using an ORM (like ActiveRecord).
+
+**Answer**: Using an ORM (Object Relational Model) allows you to interact with
+database information in an OOP way. An ORM like ActiveRecord will translate rows
+from your SQL tables into Ruby objects on fetch, and translates your Ruby
+objects back to rows on save resulting in less overall database access code.
+
+## Question Five:
+
+When are model validations run?
+
+**Answer**: Whenever a model instance is _updated_ or _saved_ to the database.
+
+Lisa - PartnerB:
+
+## Question Three
+
+Given all possible SQL commands order by order of query execution. (SELECT,
+DISTINCT, FROM, JOIN, WHERE, GROUP BY, HAVING, LIMIT/OFFSET, ORDER).
+
+FROM, JOIN,  WHERE, GROUP BY, HAVING, SELECT, DISTINCT, ORDER, LIMIT/OFFSET, 
+
+Friends will join us giving high schoolers our laptop
+Fiery jalepenos good ole ole lovin
+
+## Question Four
+
+Given the following table:
+
+```ruby
+# == Schema Information
+#
+# Table name: nobels
+#
+#  yr          :integer
+#  subject     :string
+#  winner      :string
+
+```
+
+Write the following SQL Query:
+
+1.  In which years was the Physics prize awarded, but no Chemistry prize?
+
+SELECT 
+    distinct yr 
+FROM 
+    nobels 
+WHERE 
+    subject = 'Physics' AND yr NOT IN
+    (
+        SELECT 
+            yr 
+        FROM 
+            nobels 
+        WHERE
+            subject = 'Chemistry'
+    )
+
+## Question Five
+
+What is the purpose of a database migration?
+
+**Answer**: A migration is a file containing Ruby code that describes a set of
+changes to be applied to a database. It may create or drop tables as well as add
+or remove columns from a table.
+
+## Question Six
+
+What is the difference between Database Constraints and Active Record
+Validations?
+
+**Answer**: **Validations** are defined inside **models**. Model-level
+validations live in the Rails world. Since we write them in Ruby, they are very
+flexible, database agnostic, and convenient to test, maintain and reuse.
+Validations are run whenever we `save` or `update` a model. **Constraints** are
+defined inside **migrations** and operate on the database. Constraints throw
+hard nasty errors whenever something that shouldn't be inputted into our
+database tries to get in there.
+
+## Question Seven
+
+Given the following table write all the `belongs_to` and `has_many` associations
+for models based on the below table (`User`, `Game`, and `Score`)
+
+```ruby
+# == Schema Information
+#
+# Table name: user
+#
+#  id   :integer          not null, primary key
+#  name :string           not null
+
+
+# Table name: score
+#
+#  id   :integer           not null, primary key
+#  number :integer         not null
+#  user_id :integer        not null
+#  game_id :integer        not null
+
+
+# Table name: game
+#
+#  id   :integer           not null, primary key
+#  name :string            not null
+#  game_maker_id :integer  not null
+
+USER 
+has_many :scores,
+primary_key: :id,
+foreign_key: :user_id,
+class_name: 'Score'
+
+has_many :games,
+primary_key: :id,
+foreign_key: :game_maker_id,
+class_name: 'Game'
+
+SCORE 
+belongs_to :user,
+primary_key: :id,
+foreign_key: :user_id,
+class_name: 'User'
+
+belongs_to :game,
+primary_key: :id,
+foreign_key: :game_id,
+class_name: 'Game'
+
+
+GAME 
+has_many :scores,
+primary_key: :id,
+foreign_key: :game_id,
+class_name: 'Score'
+
+belongs_to :game_maker,
+primary_key: :id,
+foreign_key: :game_maker_id,
+class_name: 'User'
+
+## Question Six:
+
+Given the following Schema:
+
+```ruby
+
+# == Schema Information
+#
+# Table name: actors
+#
+#  id          :integer      not null, primary key
+#  name        :string
+#
+# Table name: movies
+#
+#  id          :integer      not null, primary key
+#  title       :string
+#
+# Table name: castings
+#
+#  movie_id    :integer      not null, primary key
+#  actor_id    :integer      not null, primary key
+#  ord         :integer
+```
+
+Write two SQL Queries:
+
+1.  List the films where 'Harrison Ford' has appeared - but not in the star
+    role.
+    - **Note:** the `ord` field of casting gives the position of the actor. If
+      `ord=1` then this actor is in the starring role
+2.  Obtain a list in alphabetical order of actors who've had at least 15
+    starring roles.
+
+SELECT
+    title
+FROM 
+    movies
+JOIN
+    castings ON movies.id = castings.movie_id
+JOIN
+    actors ON castings.actor_id = actors.id
+WHERE
+    actors.name = 'Harrison Ford' AND castings.ord != 1
+
+SELECT
+    actors.name
+FROM
+    actors
+JOIN
+    castings ON castings.actor_id = actors.id
+WHERE
+    castings.ord = 1
+GROUP BY
+    actors.name
+HAVING
+    COUNT(*) >= 15
+ORDER BY
+    actors.name ASC
+
+
+## Question Seven:
+
+Identify the difference between a `has_many through` and a `has_one`
+association?
+
+**Answer**: We use `has_many` when a record holds a column (the primary key)
+that is referred to by a foreign key in the associated records. `has_one` is a
+`has_many` association where at most one associated record will exist so we will
+only return a single instance of the model.
