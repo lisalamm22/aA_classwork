@@ -1,0 +1,34 @@
+<h1>Edit a cat!</h1>
+<!--
+<form action="<%= cat_url(@cat) %>" method="POST">
+<input type="hidden" name="_method" value="PATCH">
+    <label for="birth_date">Birthdate:
+        <input type="text" name="cat[birth_date]" value="<%= @cat.birth_date %>">
+    </label>
+    <br>
+    <label for="color">Color:</label>
+    <select id="color" name="cat[color]" >
+        <option disabled selected>--Please Select--</option>
+        <option value="white">white</option>
+        <option value="black">black</option>
+        <option value="orange">orange</option>
+        <option value="brown">brown</option>
+    </select>
+    <br>
+    <label for="name">Name:
+        <input type="text" name="cat[name]" value="<%= @cat.name %>">
+    </label>
+    <br>
+    <label for="sex">Sex:
+        <input type="text" name="cat[sex]" value="<%= @cat.sex %>">
+    </label>
+    <br>
+    <label for="description">Description:
+        <input type="textarea" name="cat[description]" value="<%= @cat.description %>">
+    </label>
+    <br>
+    <input type="submit" value="Update Cat">
+
+</form> -->
+
+<%= render 'form', {cat: @cat, type: :edit} %>
