@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MusicApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body style= "background-color: #ffcc99; font-family: 'Futura' ;">
+  <h1 style="color:#3b7a57 ;">MUSIC APP</h1>
+  <div style="display:flex; justify-content: space-between;">
+  <% if logged_in? %>
+  
+    <form action="<%= user_url(current_user.id) %>" method="GET" >
+      <input type="submit" value="Take Me Home" style="background-color: lightyellow; border-radius: 10px; ">
+    </form>
+    <form action="<%= session_url %>" method="POST" >
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="_method" value="DELETE">
+      <input type="submit" value="Sign out" style = "background-color: lightyellow; border-radius: 10px;">
+    </form>
+  <% end %>
+  </div>
+    <%= yield %>
+  </body>
+</html>

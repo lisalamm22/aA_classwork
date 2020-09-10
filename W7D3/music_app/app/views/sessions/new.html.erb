@@ -1,0 +1,14 @@
+<h2 style="color:#679267 ;">SIGN-IN</h2>
+<a href="<%= new_user_url %>" style="background-color: lightyellow; border-radius: 10px; ">Go to Sign-Up!</a>
+<form action="<%= session_url %>" method="POST">
+<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <label>Email
+        <input type="text" name="user[email]" value="">
+    </label>
+    <br>
+    <label >Password
+        <input type="text" name="user[password]" value="">
+    </label>
+    <br>
+    <input type="submit" value="Submit" style="background-color: lightyellow; border-radius: 10px;">
+</form>
