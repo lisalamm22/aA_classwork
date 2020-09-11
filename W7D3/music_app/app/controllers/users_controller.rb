@@ -8,7 +8,7 @@ class UsersController < ApplicationController
         @user = User.new(user_params)
         if @user.save
             login!(@user)
-            redirect_to user_url(@user.id)#bands_url #takes us to bands index page
+            redirect_to bands_url #ser_url(@user.id) #takes us to bands index page
         else
             flash.now[:errors] = @user.errors.full_messages
             render :new
@@ -17,7 +17,8 @@ class UsersController < ApplicationController
 
     def show
         @user = User.find(params[:id])
-        render :show
+        # render :show
+        redirect_to bands_url
     end
 
     private

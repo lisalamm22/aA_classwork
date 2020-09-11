@@ -1,6 +1,6 @@
-<h2 style="color:#679267 ;">NEW USER</h2>
-<a href="<%= new_session_url %>" style="background-color: lightyellow; border-radius: 10px; ">Go to sign-in</a>
-<form action="<%= users_url %>" method="POST">
+<h2 style="display: flex; justify-content: center; color:#679267 ;">NEW USER</h2>
+<a href="<%= new_session_url %>" style="background-color: lightyellow; border-radius: 10px; ">Go to Sign-In</a>
+<form action="<%= users_url %>" method="POST" style="display: flex; justify-content: center; margin:10px; ">
 <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
     <label >Email
         <input type="text" name="user[email]" value="">
@@ -10,5 +10,5 @@
         <input type="text" name="user[password]" value="">
     </label>
     <br>
-    <input type="submit" value="Submit" style="background-color: lightyellow; border-radius: 10px;">
+    <input type="submit" value="Submit" style="background-color: lightyellow; border-radius: 10px;border: 0px;">
 </form>

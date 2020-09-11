@@ -1,8 +1,12 @@
-<h2>BANDS</h2>
+<h2 style="display:flex; justify-content: center;">BANDS</h2>
 <ul style="display: flex; justify-content: space-around;">
 <% @bands.each do |band| %>
-    <li><a href="<%= band_url(band.id) %>"></a><%= band.name %> </li> 
+    <li><a href="<%= band_url(band.id) %>"><%= band.name %></a> </li> 
     <br>
 <% end %>
-
 </ul>
+
+<div style="display:flex; justify-content: center; flex-direction: column;">
+<h3>LINKS</h3>
+<a href="<%= new_band_url %>">New Band</a>
+<div>

@@ -10,17 +10,16 @@
   </head>
 
   <body style= "background-color: #ffcc99; font-family: 'Futura' ;">
-  <h1 style="color:#3b7a57 ;">MUSIC APP</h1>
-  <div style="display:flex; justify-content: space-between;">
+  <h1 style="display:flex; justify-content: center;color:#3b7a57 ;">MUSIC APP</h1>
+  <div style="display:flex; justify-content: space-around;">
   <% if logged_in? %>
-  
-    <form action="<%= user_url(current_user.id) %>" method="GET" >
-      <input type="submit" value="Take Me Home" style="background-color: lightyellow; border-radius: 10px; ">
+    <form action="<%= bands_url %>" method="GET" >
+      <input type="submit" value="Take Me Home" style="background-color: lightyellow; border-radius: 10px; border 0px; ">
     </form>
     <form action="<%= session_url %>" method="POST" >
       <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
       <input type="hidden" name="_method" value="DELETE">
-      <input type="submit" value="Sign out" style = "background-color: lightyellow; border-radius: 10px;">
+      <input type="submit" value="Sign out" style = "background-color: lightyellow; border-radius: 10px; border 0px;">
     </form>
   <% end %>
   </div>
