@@ -1,0 +1,19 @@
+<h1>Create a New Post</h1>
+
+<form action="<%=posts_url%>" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="post[sub_id]" value=<%= params[:sub_id] %>> 
+    <label for="title">Title
+        <input type="text" name="post[title]" value="<%= @post.title %>">
+    </label>
+    <label for="url">URL
+        <input type="text"name="post[url]" value="<%= @post.url%>">
+    </label>
+    <label for="content">Content
+        <input type="text"name="post[content]" value="<%= @post.content%>">
+    </label>
+    <% @subs %>
+    <input type="checkbox" name="post[sub_ids][]" value=>
+
+    <button>Create Post!</button>
+</form>

@@ -1,0 +1,13 @@
+<h1><a href="<%=post_url%>" ><%= @post.title %></a> by <%=@post.author.username%></h1>  
+
+<h4>Content:</h4>
+<%=@post.content%>
+<button>Upvote</button>
+<button>Downvote</button>
+
+   <h4>Subs</h4>
+   <ul>
+        <li><a href="<%=sub_url(@post)%>"><%=@post.sub.title%></a></li>
+   </ul>
+    
+<a href="<%= edit_post_url(@post) %>">Edit</a>
