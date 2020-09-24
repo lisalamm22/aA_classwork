@@ -1,0 +1,38 @@
+h1{
+    /* margin: 0 auto; */
+    font-size: 40px;
+    text-align: center;
+    font-weight: bold;
+    font-family: "Century Gothic";
+}
+ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    width: 350px;
+    /* height: 50%; */
+    margin: 0 auto;
+}
+
+li {
+    width: 100px;
+    height: 100px;
+    border: 5px black solid;
+    /* padding-top: 49px; */
+    background-color: gray;
+    color: black;
+    font-size: 75px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.unclicked:hover {
+    background-color: yellow;
+    cursor: pointer;
+}
+
+.clicked {
+    background-color: white;
+}
+
+
